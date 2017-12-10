@@ -4,7 +4,6 @@ class Datos extends Component {
 
     render() {
         const pokemon = this.props.pokemon;
-        console.log(pokemon);
 
         return (
             <div>
