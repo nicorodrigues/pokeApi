@@ -39,13 +39,11 @@ class Pokemon extends Component {
             if (this.state.loaded === 1) {
                 return <Datos pokemon={this.state.pokemon}  />
             }
-        } else {
-            if (id !== 0 && id !== '' && id <= this.state.limit) {
-                this.fetchData();
-                return <p>Cargando...</p>;
-            }
-            return false
+        } else if (id !== 0 && id !== '' && id <= this.state.limit) {
+            this.fetchData();
+            return <p>Cargando...</p>;
         }
+        return false
     }
 }
 
