@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios'
 import Datos from './Datos'
 
@@ -9,21 +8,23 @@ class Pokemon extends Component {
         this.state = {
             loaded: 0,
             id: '',
-            pokemon: ''
+            pokemon: '',
+            limit: 949
         };
     }
 
     fetchData = () => {
         const proxy = 'https://cors-anywhere.herokuapp.com/';
+        const url = 'http://pokeapi.co/api/v2/pokemon/';
 
-        axios.get(`${proxy}http://pokeapi.co/api/v2/pokemon/${this.props.idPokemon}`)
+        axios.get(proxy + url + this.props.idPokemon)
         .then(function(datos) {
             const pokemon = datos.data;
 
             this.setState({
                 pokemon: pokemon,
                 id: this.props.idPokemon,
-                loaded: 1
+                loaded: 1,
             });
 
         }.bind(this))
@@ -32,12 +33,14 @@ class Pokemon extends Component {
 
 
     render() {
-        if (this.props.idPokemon === this.state.id) {
+        const id = this.props.idPokemon;
+
+        if (id === this.state.id) {
             if (this.state.loaded === 1) {
                 return <Datos pokemon={this.state.pokemon}  />
             }
         } else {
-            if (this.props.idPokemon !== 0) {
+            if (id !== 0 && id !== '' && id <= this.state.limit) {
                 this.fetchData();
                 return <p>Cargando...</p>;
             }

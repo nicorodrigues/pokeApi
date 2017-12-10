@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Pokemon from './Pokemon'
 
@@ -23,7 +22,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <input type="text" onBlur={evento => this.setPokemon(evento)} />
+                <input type="text" onChange={evento => this.setPokemon(evento)} />
 
                 <Pokemon idPokemon={this.state.idPokemon} />
             </div>
