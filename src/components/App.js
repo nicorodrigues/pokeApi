@@ -47,6 +47,8 @@ class App extends Component {
     render() {
         const { limit } = this.state;
         const { idPokemon } = this.state;
+        const { loaded } = this.state;
+        const { pokemon } = this.state;
 
         return (
 
@@ -58,7 +60,7 @@ class App extends Component {
                  : <button type="button" >Buscar</button>}
 
                 {
-                    this.state.loaded !== 0 ? <Pokemon loaded={this.state.loaded} pokemon={this.state.pokemon} /> : ""
+                    loaded !== 0 ? <Pokemon loaded={loaded} pokemon={pokemon} /> : ""
                 }
 
             </div>
