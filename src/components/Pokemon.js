@@ -1,49 +1,32 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import Datos from './Datos'
 
 class Pokemon extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            loaded: 0,
-            id: '',
-            pokemon: '',
+            pokemon: this.props.pokemon,
             limit: 949
         };
     }
 
-    fetchData = () => {
-        const proxy = 'https://cors-anywhere.herokuapp.com/';
-        const url = 'http://pokeapi.co/api/v2/pokemon/';
-
-        axios.get(proxy + url + this.props.idPokemon)
-        .then(function(datos) {
-            const pokemon = datos.data;
-
-            this.setState({
-                pokemon: pokemon,
-                id: this.props.idPokemon,
-                loaded: 1,
-            });
-
-        }.bind(this))
-        .catch(error => console.log(error))
-    }
-
-
     render() {
-        const id = this.props.idPokemon;
+        const pokemon = this.props.pokemon;
 
-        if (id === this.state.id) {
-            if (this.state.loaded === 1) {
-                return <Datos pokemon={this.state.pokemon}  />
-            }
-        } else if (id !== 0 && id !== '' && id <= this.state.limit) {
-            this.fetchData();
-            return <p>Cargando...</p>;
+        if (this.props.loaded === 1) {
+            return <p>Cargando...</p>
         }
-        return false
+        return (
+            <div>
+                <ul>
+                    <li><img src={pokemon.sprites.front_default} alt={pokemon.name} /></li>
+                    <li><h1>{pokemon.name}</h1></li>
+                    <li>Número: {pokemon.id}</li>
+                    {pokemon.stats.map(function(elem) {
+                        return <li key={elem.stat.name}>{elem.stat.name}: {elem.base_stat}</li>
+                    })}
+                </ul>
+            </div>
+        )
     }
 }
 
