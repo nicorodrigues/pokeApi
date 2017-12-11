@@ -10,7 +10,8 @@ class App extends Component {
         this.state = {
             pokemon: '',
             idPokemon: 0,
-            loaded: 0
+            loaded: 0,
+            limit: 802
         }
     }
 
@@ -19,13 +20,13 @@ class App extends Component {
             loaded: 1,
         })
         const proxy = 'https://cors-anywhere.herokuapp.com/';
-        const url = 'http://pokeapi.co/api/v2/pokemon/';
+        const proxy1 = 'https://cors.now.sh/'
+        const url = 'https://pokeapi.co/api/v2/pokemon/';
+        const query = proxy1 + url + this.state.idPokemon;
 
-
-        axios.get(proxy + url + this.state.idPokemon)
+        axios.get(query)
         .then(function(datos) {
             const pokemon = datos.data;
-
             this.setState({
                 pokemon: pokemon,
                 loaded: 2,
@@ -44,12 +45,21 @@ class App extends Component {
     }
 
     render() {
+        const { limit } = this.state;
+        const { idPokemon } = this.state;
+
         return (
+
             <div className="App">
                 <input type="text" onChange={evento => this.setPokemon(evento)} />
+                {
+                    limit >= idPokemon ?
                 <button type="button" onClick={this.fetchData}>Buscar</button>
+                 : <button type="button" >Buscar</button>}
 
-                {this.state.loaded !== 0 ? <Pokemon loaded={this.state.loaded} pokemon={this.state.pokemon} /> : ""}
+                {
+                    this.state.loaded !== 0 ? <Pokemon loaded={this.state.loaded} pokemon={this.state.pokemon} /> : ""
+                }
 
             </div>
         );

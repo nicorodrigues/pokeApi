@@ -5,7 +5,6 @@ class Pokemon extends Component {
         super(props)
         this.state = {
             pokemon: this.props.pokemon,
-            limit: 949
         };
     }
 
