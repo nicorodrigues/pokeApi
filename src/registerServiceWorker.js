@@ -9,7 +9,7 @@
 // This link also includes instructions on opting out of this behavior.
 
 const isLocalhost = Boolean(
-  window.location.hostname === 'http://144.217.164.197' ||
+  window.location.hostname === '144.217.164.197' ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
     // 127.0.0.1/8 is considered localhost for IPv4.
