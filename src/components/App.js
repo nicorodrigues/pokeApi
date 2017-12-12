@@ -47,7 +47,7 @@ class App extends Component {
 setPokemon(evento) {
     if (this.state.idPokemon !== evento.target.value) {
         this.setState({
-            idPokemon: evento.target.value
+            idPokemon: isNaN(evento.target.value) ? evento.target.value.toLowerCase() : evento.target.value
         });
     }
 }
