@@ -40,37 +40,38 @@ class App extends Component {
                 error: 1,
                 loaded: 2
             });
-            }.bind(this)
-        )
+        }.bind(this)
+    )
+}
+
+setPokemon(evento) {
+    if (this.state.idPokemon !== evento.target.value) {
+        this.setState({
+            idPokemon: evento.target.value
+        });
     }
+}
 
-    setPokemon(evento) {
-        if (this.state.idPokemon !== evento.target.value) {
-            this.setState({
-                idPokemon: evento.target.value
-            });
-        }
-    }
+render() {
+    const { limit } = this.state;
+    const { loaded } = this.state;
+    const { pokemon } = this.state;
+    const { error } = this.state;
 
-    render() {
-        const { limit } = this.state;
-        const { idPokemon } = this.state;
-        const { loaded } = this.state;
-        const { pokemon } = this.state;
-        const { error } = this.state;
+    return (
 
-        return (
+        <div className="App">
+            <input type="text" onChange={evento => this.setPokemon(evento)} />
+            <button type="button" onClick={this.fetchData}>Buscar</button>
+            <div className="pokedex">
+                <img src="./pokedex.jpg" alt="test" />
+            {
+                loaded !== 0 ? <Pokemon error={error} loaded={loaded} pokemon={pokemon} /> : ""
+            }
+        </div>
+    </div>
+);
+}
+}
 
-            <div className="App">
-                <input type="text" onChange={evento => this.setPokemon(evento)} />
-                    <button type="button" onClick={this.fetchData}>Buscar</button>
-                    {
-                        loaded !== 0 ? <Pokemon error={error} loaded={loaded} pokemon={pokemon} /> : ""
-                    }
-
-                </div>
-            );
-        }
-    }
-
-    export default App;
+export default App;

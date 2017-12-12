@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  width: 400px;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -24,6 +26,50 @@
 
 ul {
     list-style: none;
+}
+
+.pokedex {
+    position: relative;
+}
+
+.foto {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 240px;
+    left: 45%;
+}
+
+.notFoundText {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 260px;
+    left: 45%;
+}
+
+.nombre {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 180px;
+    left: 45%;
+}
+
+.numero {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 300px;
+    left: 45%;
+}
+
+.datos {
+    position: absolute;
+    right: -50%;
+    top: 165px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.notFound {
+    width: 60px;
 }
 
 @keyframes App-logo-spin {
