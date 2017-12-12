@@ -12,7 +12,10 @@ class Pokemon extends Component {
         const pokemon = this.props.pokemon;
 
         if (this.props.loaded === 1) {
-            return <p>Cargando...</p>
+            return <p>Cargando...</p>;
+        }
+        if (this.props.error === 1) {
+            return <p>El Pokémon no existe...</p>;
         }
         return (
             <div>
