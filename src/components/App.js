@@ -22,7 +22,7 @@ class App extends Component {
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         const proxy1 = 'https://cors.now.sh/'
         const url = 'https://pokeapi.co/api/v2/pokemon/';
-        const query = proxy1 + url + this.state.idPokemon;
+        const query = url + this.state.idPokemon;
 
         axios.get(query)
         .then(function(datos) {
