@@ -34,8 +34,6 @@ class App extends Component {
                 idPokemon: pokemon.id,
                 loaded: 2,
             });
-        }.bind(this))
-        .then(function (datos) {
             this.fotitoTermina();
         }.bind(this))
         .catch(function(error) {
@@ -67,7 +65,9 @@ class App extends Component {
     }
 
     fotitoTermina = () => {
+        const foto = document.querySelector('#fotito');
         clearInterval(this.fotito);
+        foto.style.display = 'none';
     }
 
     nextPokemon = () => {
@@ -87,6 +87,7 @@ class App extends Component {
                 idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id - 1 : this.state.idPokemon - 1
             }, function() {
                 this.fetchData();
+                this.fotitoArranca();
             }.bind(this));
         }
     }
