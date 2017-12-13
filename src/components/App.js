@@ -31,6 +31,7 @@ class App extends Component {
             const pokemon = datos.data;
             this.setState({
                 pokemon: pokemon,
+                idPokemon: pokemon.id,
                 loaded: 2,
             });
 
@@ -52,19 +53,23 @@ class App extends Component {
     }
 
     nextPokemon = () => {
-        this.setState({
-            idPokemon: this.state.pokemon.id + 1
-        }, function() {
-            this.fetchData();
-        }.bind(this));
+        if (this.state.idPokemon < this.state.limit) {
+            this.setState({
+                idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id + 1 : this.state.idPokemon + 1
+            }, function() {
+                this.fetchData();
+            }.bind(this));
+        }
     }
 
     prevPokemon = () => {
-        this.setState({
-            idPokemon: this.state.pokemon.id - 1
-        }, function() {
-            this.fetchData();
-        }.bind(this));
+        if (this.state.idPokemon > 0) {
+            this.setState({
+                idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id - 1 : this.state.idPokemon - 1
+            }, function() {
+                this.fetchData();
+            }.bind(this));
+        }
     }
 
     render() {
