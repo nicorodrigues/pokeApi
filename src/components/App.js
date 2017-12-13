@@ -40,38 +40,56 @@ class App extends Component {
                 error: 1,
                 loaded: 2
             });
-        }.bind(this)
-    )
-}
-
-setPokemon(evento) {
-    if (this.state.idPokemon !== evento.target.value) {
-        this.setState({
-            idPokemon: isNaN(evento.target.value) ? evento.target.value.toLowerCase() : evento.target.value
-        });
+        }.bind(this))
     }
-}
 
-render() {
-    const { limit } = this.state;
-    const { loaded } = this.state;
-    const { pokemon } = this.state;
-    const { error } = this.state;
+    setPokemon(evento) {
+        if (this.state.idPokemon !== evento.target.value) {
+            this.setState({
+                idPokemon: isNaN(evento.target.value) ? evento.target.value.toLowerCase() : evento.target.value
+            });
+        }
+    }
 
-    return (
+    nextPokemon = () => {
+        this.setState({
+            idPokemon: this.state.pokemon.id + 1
+        }, function() {
+            this.fetchData();
+        }.bind(this));
+    }
 
-        <div className="App">
-            <input type="text" onChange={evento => this.setPokemon(evento)} />
-            <button type="button" onClick={this.fetchData}>Buscar</button>
-            <div className="pokedex">
-                <img src="./pokedex.jpg" alt="test" />
-            {
-                loaded !== 0 ? <Pokemon error={error} loaded={loaded} pokemon={pokemon} /> : ""
-            }
-        </div>
-    </div>
-);
-}
+    prevPokemon = () => {
+        this.setState({
+            idPokemon: this.state.pokemon.id - 1
+        }, function() {
+            this.fetchData();
+        }.bind(this));
+    }
+
+    render() {
+        const { limit } = this.state;
+        const { loaded } = this.state;
+        const { pokemon } = this.state;
+        const { error } = this.state;
+
+        return (
+
+            <div className="App">
+                <input type="text" onChange={evento => this.setPokemon(evento)} />
+                <button type="button" onClick={this.fetchData}>Buscar</button>
+                <div className="pokedex">
+                    <img src="./pokedex.jpg" alt="test" />
+                    <div id="next" onClick={this.nextPokemon}></div>
+                    <div id="prev" onClick={this.prevPokemon}></div>
+
+                    {
+                        loaded !== 0 ? <Pokemon error={error} loaded={loaded} pokemon={pokemon} /> : ""
+                    }
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
