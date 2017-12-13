@@ -63,7 +63,7 @@ class App extends Component {
     }
 
     prevPokemon = () => {
-        if (this.state.idPokemon > 0) {
+        if (this.state.idPokemon > 1) {
             this.setState({
                 idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id - 1 : this.state.idPokemon - 1
             }, function() {
