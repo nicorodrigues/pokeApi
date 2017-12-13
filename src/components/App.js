@@ -12,7 +12,7 @@ class App extends Component {
             idPokemon: 0,
             loaded: 0,
             limit: 802,
-            error: 0
+            error: 0,
         }
     }
 
@@ -34,7 +34,9 @@ class App extends Component {
                 idPokemon: pokemon.id,
                 loaded: 2,
             });
-
+        }.bind(this))
+        .then(function (datos) {
+            this.fotitoTermina();
         }.bind(this))
         .catch(function(error) {
             this.setState({
@@ -52,12 +54,29 @@ class App extends Component {
         }
     }
 
+    fotitoArranca = () => {
+        const foto = document.querySelector('#fotito');
+
+        this.fotito = setInterval(function() {
+                if (foto.style.display === "block") {
+                    foto.style.display = 'none';
+                } else {
+                    foto.style.display = 'block';
+                }
+            }, 300)
+    }
+
+    fotitoTermina = () => {
+        clearInterval(this.fotito);
+    }
+
     nextPokemon = () => {
         if (this.state.idPokemon < this.state.limit) {
             this.setState({
                 idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id + 1 : this.state.idPokemon + 1
             }, function() {
                 this.fetchData();
+                this.fotitoArranca();
             }.bind(this));
         }
     }
@@ -84,6 +103,7 @@ class App extends Component {
                 <input type="text" onChange={evento => this.setPokemon(evento)} />
                 <button type="button" onClick={this.fetchData}>Buscar</button>
                 <div className="pokedex">
+                    <img id="fotito" src="./fotito.png" alt="fotito" />
                     <img src="./pokedex.jpg" alt="test" />
                     <div id="next" onClick={this.nextPokemon}></div>
                     <div id="prev" onClick={this.prevPokemon}></div>

@@ -88,6 +88,13 @@ ul {
     border: none;
 }
 
+#fotito {
+    display: none;
+    position: absolute;
+    top: 8px;
+    left: 24px;
+}
+
 .notFound {
     width: 60px;
 }

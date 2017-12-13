@@ -18,7 +18,7 @@ class Pokemon extends Component {
             return (
                 <div>
                     <img src='/notFound.gif' alt='not found' className="foto notFound" />
-                    <p className="notFoundText">El Pokémon no existe...</p>;
+                    <p className="notFoundText">El Pokémon no existe...</p>
                 </div>
             )
         }
