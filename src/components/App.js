@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Pokemon from './Pokemon'
-import axios from 'axios'
+import Pokemon from './Pokemon';
+import axios from 'axios';
+import Pad from './Pad';
 
 class App extends Component {
 
@@ -13,6 +14,7 @@ class App extends Component {
             loaded: 0,
             limit: 802,
             error: 0,
+            togglePhoto: false
         }
     }
 
@@ -22,8 +24,8 @@ class App extends Component {
             error: 0,
             loaded: 1,
         })
-        const proxy = 'https://cors-anywhere.herokuapp.com/';
-        const proxy1 = 'https://cors.now.sh/'
+        // const proxy = 'https://cors-anywhere.herokuapp.com/';
+        // const proxy1 = 'https://cors.now.sh/'
         const url = 'https://pokeapi.co/api/v2/pokemon/';
         const query = url + this.state.idPokemon;
 
@@ -35,6 +37,7 @@ class App extends Component {
                 idPokemon: pokemon.id,
                 loaded: 2,
             });
+
             this.fotitoTermina();
         }.bind(this))
         .catch(function(error) {
@@ -54,6 +57,9 @@ class App extends Component {
     }
 
     fotitoArranca = () => {
+        if (this.fotito) {
+            this.fotitoTermina();
+        }
         const foto = document.querySelector('#fotito');
 
         this.fotito = setInterval(function() {
@@ -82,20 +88,24 @@ class App extends Component {
     }
 
     prevPokemon = () => {
-        if (this.state.idPokemon > 1) {
+        const {idPokemon} = this.state;
+
+        if (idPokemon > 1) {
             this.setState({
-                idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id - 1 : this.state.idPokemon - 1
+                idPokemon: isNaN(idPokemon) ? this.state.pokemon.id - 1 : idPokemon - 1
             }, function() {
                 this.fetchData();
             }.bind(this));
         }
     }
 
+    togglePhotoSize = () => {
+        this.state.togglePhoto === false ? this.setState({togglePhoto: true}) : this.setState({togglePhoto: false})
+    }
+
     render() {
-        const { limit } = this.state;
-        const { loaded } = this.state;
-        const { pokemon } = this.state;
-        const { error } = this.state;
+        const { loaded, pokemon, error, togglePhoto } = this.state;
+
 
         return (
 
@@ -105,11 +115,9 @@ class App extends Component {
                 <div className="pokedex">
                     <img id="fotito" src="./fotito.png" alt="fotito" />
                     <img src="./pokedex.jpg" alt="test" />
-                    <div id="next" onClick={this.nextPokemon}></div>
-                    <div id="prev" onClick={this.prevPokemon}></div>
-
+                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} />
                     {
-                        loaded !== 0 ? <Pokemon error={error} loaded={loaded} pokemon={pokemon} /> : ""
+                        loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} pokemon={pokemon} /> : ""
                     }
                 </div>
             </div>

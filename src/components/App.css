@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+.hidden {
+    display: none;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -39,6 +43,11 @@ ul {
     left: 45%;
 }
 
+.fotoGrande {
+    width: 150px;
+    height: 150px;
+}
+
 .notFoundText {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -62,10 +71,11 @@ ul {
 
 .datos {
     position: absolute;
-    right: -50%;
+    left: 115%;
     top: 165px;
     font-weight: bold;
     text-align: left;
+    width: 200px;
 }
 
 #next {
@@ -93,6 +103,14 @@ ul {
     position: absolute;
     top: 8px;
     left: 24px;
+}
+
+#togglePhotoSize {
+    position: absolute;
+    top: 71%;
+    left: 43px;
+    height: 60px;
+    width: 60px;
 }
 
 .notFound {
