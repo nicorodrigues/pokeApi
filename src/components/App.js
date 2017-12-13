@@ -17,6 +17,7 @@ class App extends Component {
     }
 
     fetchData = () => {
+        this.fotitoArranca();
         this.setState({
             error: 0,
             loaded: 1,
@@ -76,7 +77,6 @@ class App extends Component {
                 idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id + 1 : this.state.idPokemon + 1
             }, function() {
                 this.fetchData();
-                this.fotitoArranca();
             }.bind(this));
         }
     }
@@ -87,7 +87,6 @@ class App extends Component {
                 idPokemon: isNaN(this.state.idPokemon) ? this.state.pokemon.id - 1 : this.state.idPokemon - 1
             }, function() {
                 this.fetchData();
-                this.fotitoArranca();
             }.bind(this));
         }
     }
