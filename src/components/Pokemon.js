@@ -17,8 +17,7 @@ class Pokemon extends Component {
         if (this.props.error === 1) {
             return (
                 <div>
-                    <img src='/notFound.gif' alt='not found' className="foto notFound" />
-                    <p className="notFoundText">El Pokémon no existe...</p>
+                    <img src='/notFound.png' alt='not found' className="foto notFound" />
                 </div>
             )
         }
