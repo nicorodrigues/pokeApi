@@ -3,6 +3,7 @@ import './App.css';
 import Pokemon from './Pokemon';
 import axios from 'axios';
 import Pad from './Pad';
+import NumPad from './NumPad';
 
 class App extends Component {
 
@@ -45,6 +46,7 @@ class App extends Component {
                 error: 1,
                 loaded: 2
             });
+            this.fotitoTermina();
         }.bind(this))
     }
 
@@ -103,6 +105,39 @@ class App extends Component {
         this.state.togglePhoto === false ? this.setState({togglePhoto: true}) : this.setState({togglePhoto: false})
     }
 
+    handleNumPad = (event) => {
+        const newNumber = this.state.idPokemon + `${event.currentTarget.textContent}`;
+
+        if (this.state.idPokemon == 0) {
+            this.setState({
+                idPokemon: Number(event.currentTarget.textContent)
+            })
+        } else if (newNumber >= this.state.limit) {
+            this.setState({
+                idPokemon: this.state.limit
+            })
+        } else {
+            this.setState({
+                idPokemon: Number(newNumber)
+            })
+        }
+    }
+
+    lastOneOut = () => {
+        const idPokemon = String(this.state.idPokemon);
+
+        if (idPokemon.length !== 1) {
+            console.log(idPokemon.length);
+            this.setState({
+                idPokemon: Number(String(this.state.idPokemon).substring(0, idPokemon.length - 1))
+            })
+        } else {
+            this.setState({
+                idPokemon: 0
+            })
+        }
+    }
+
     render() {
         const { loaded, pokemon, error, togglePhoto } = this.state;
 
@@ -117,8 +152,10 @@ class App extends Component {
                     <img src="./pokedex.jpg" alt="test" />
                     <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} />
                     {
-                        loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} pokemon={pokemon} /> : ""
+                        loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} idPokemon={this.state.idPokemon} pokemon={pokemon} /> : ""
                     }
+                    <NumPad handleNumPad={this.handleNumPad} lastOneOut={this.lastOneOut} search={this.fetchData} />
+                    <p className="numero">Número: {this.state.idPokemon}</p>
                 </div>
             </div>
         );
