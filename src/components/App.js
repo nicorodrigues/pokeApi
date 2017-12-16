@@ -231,6 +231,22 @@ class App extends Component {
         }
     }
 
+    randomPokemon = () => {
+        const min = 0;
+        const max = this.state.limit;
+        let id;
+
+        if(min == 0){
+            id = Math.floor((Math.random() * max) + 0);
+        }else{
+            id = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        this.setState({
+            idPokemon: id,
+            busqueda: ''
+        }, this.fetchData)
+    }
 
     render() {
         const { loaded, pokemon, error, togglePhoto } = this.state;
@@ -244,7 +260,7 @@ class App extends Component {
                 <div className="pokedex">
                     <img id="fotito" src="./fotito.png" alt="fotito" />
                     <img src="./pokedex.jpg" alt="test" />
-                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} reset={this.reset} />
+                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} reset={this.reset} random={this.randomPokemon}/>
                     {
                         loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} idPokemon={this.state.idPokemon} pokemon={pokemon} /> : ""
                     }

@@ -111,7 +111,7 @@ ul {
     left: 24px;
 }
 
-#togglePhotoSize {
+#togglePhotoSize, #randomPokemon {
     position: absolute;
     top: 70%;
     left: 39px;
