@@ -113,7 +113,7 @@ ul {
 
 #togglePhotoSize {
     position: absolute;
-    top: 62%;
+    top: 70%;
     left: 39px;
     height: 45px;
     width: 45px;
@@ -124,6 +124,7 @@ ul {
 .notFound {
     width: 150px;
     height: 150px;
+    top: 230px;
 }
 
 #numPad {
