@@ -260,7 +260,7 @@ class App extends Component {
                 <div className="pokedex">
                     <img id="fotito" src="./fotito.png" alt="fotito" />
                     <img src="./pokedex.jpg" alt="test" />
-                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} reset={this.reset} random={this.randomPokemon}/>
+                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} reset={this.reset} random={loaded === 1 ? '' : this.randomPokemon}/>
                     {
                         loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} idPokemon={this.state.idPokemon} pokemon={pokemon} /> : ""
                     }
