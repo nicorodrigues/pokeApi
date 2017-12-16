@@ -39,7 +39,7 @@ ul {
 .foto {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 250px;
+    top: 260px;
     left: 45%;
     width: 150px;
     height: 150px;
@@ -48,6 +48,7 @@ ul {
 .fotoGrande {
     width: 180px;
     height: 180px;
+    top: 240px;
 }
 
 .notFoundText {
@@ -67,7 +68,7 @@ ul {
 .numero {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 457px;
+    top: 472px;
     left: 37%;
     font-weight: bold;
 }
@@ -112,10 +113,11 @@ ul {
 
 #togglePhotoSize {
     position: absolute;
-    top: 71%;
-    left: 43px;
-    height: 60px;
-    width: 60px;
+    top: 62%;
+    left: 39px;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -152,6 +154,15 @@ ul {
     font-weight: bold;
     cursor: pointer;
     font-size: 12px;
+}
+
+#reset {
+    position: absolute;
+    top: 27px;
+    left: 86px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
 @keyframes App-logo-spin {

@@ -4,6 +4,7 @@ import Pokemon from './Pokemon';
 import axios from 'axios';
 import Pad from './Pad';
 import NumPad from './NumPad';
+import Buscador from './Buscador';
 
 class App extends Component {
 
@@ -15,8 +16,10 @@ class App extends Component {
             loaded: 0,
             limit: 802,
             error: 0,
-            togglePhoto: false
+            togglePhoto: false,
+            busqueda: ''
         }
+        document.addEventListener('keydown', this.handleKeyPress);
     }
 
     fetchData = () => {
@@ -37,6 +40,7 @@ class App extends Component {
                 pokemon: pokemon,
                 idPokemon: pokemon.id,
                 loaded: 2,
+                busqueda: '',
             });
 
             this.fotitoTermina();
@@ -51,10 +55,18 @@ class App extends Component {
     }
 
     setPokemon(evento) {
-        if (this.state.idPokemon !== evento.target.value) {
-            this.setState({
-                idPokemon: isNaN(evento.target.value) ? evento.target.value.toLowerCase() : Number(evento.target.value)
-            });
+        if (evento.type) {
+            if (this.state.idPokemon !== evento.target.value) {
+                this.setState({
+                    idPokemon: isNaN(evento.target.value) ? evento.target.value.toLowerCase() : Number(evento.target.value)
+                });
+            }
+        } else {
+            if (this.state.idPokemon !== evento) {
+                this.setState({
+                    idPokemon: isNaN(evento) ? evento.toLowerCase() : Number(evento)
+                });
+            }
         }
     }
 
@@ -65,12 +77,12 @@ class App extends Component {
         const foto = document.querySelector('#fotito');
 
         this.fotito = setInterval(function() {
-                if (foto.style.display === "block") {
-                    foto.style.display = 'none';
-                } else {
-                    foto.style.display = 'block';
-                }
-            }, 300)
+            if (foto.style.display === "block") {
+                foto.style.display = 'none';
+            } else {
+                foto.style.display = 'block';
+            }
+        }, 300)
     }
 
     fotitoTermina = () => {
@@ -105,12 +117,42 @@ class App extends Component {
         this.state.togglePhoto === false ? this.setState({togglePhoto: true}) : this.setState({togglePhoto: false})
     }
 
-    handleNumPad = (event) => {
-        const newNumber = this.state.idPokemon + `${event.currentTarget.textContent}`;
+    handleLetters = (key) => {
+        let newLetter;
+        const id = this.state.idPokemon;
+
+        if (typeof id === 'number' || id === 0) {
+            newLetter = key;
+        } else {
+            newLetter = id + key;
+        }
+
+        this.setState({
+            idPokemon: newLetter,
+            busqueda: newLetter
+        })
+    }
+
+    handleNumPad = (key) => {
+        let newNumber = '';
+
+        if (key.type) {
+            newNumber = this.state.idPokemon + `${key.currentTarget.textContent}`;
+        } else {
+            newNumber = this.state.idPokemon + key;
+        }
+
+        if (typeof this.state.idPokemon === 'string') {
+            this.setState({
+                idPokemon: 0,
+                busqueda: ''
+            })
+        }
+
 
         if (this.state.idPokemon == 0) {
             this.setState({
-                idPokemon: Number(event.currentTarget.textContent)
+                idPokemon: (key.type) ? Number(key.currentTarget.textContent) : Number(key)
             })
         } else if (newNumber >= this.state.limit) {
             this.setState({
@@ -125,18 +167,70 @@ class App extends Component {
 
     lastOneOut = () => {
         const idPokemon = String(this.state.idPokemon);
+        const newId = idPokemon.substring(0, idPokemon.length - 1);
 
         if (idPokemon.length !== 1) {
-            console.log(idPokemon.length);
-            this.setState({
-                idPokemon: Number(String(this.state.idPokemon).substring(0, idPokemon.length - 1))
-            })
+
+            if (typeof this.state.idPokemon === 'string') {
+                this.setState({
+                    idPokemon: newId,
+                    busqueda: newId
+                })
+            } else {
+                this.setState({
+                    idPokemon: Number(newId),
+                })
+            }
         } else {
-            this.setState({
-                idPokemon: 0
-            })
+            if (typeof this.state.idPokemon === 'string') {
+                this.setState({
+                    idPokemon: 0,
+                    busqueda: ''
+                })
+            } else {
+                this.setState({
+                    idPokemon: 0,
+                })
+            }
         }
     }
+
+    reset = () => {
+        this.setState({
+            idPokemon: 0,
+            busqueda: ''
+        })
+    }
+
+    handleKeyPress = (keypress) => {
+        const nums = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+        const erase = [8, 27, 127];
+        const enter = 13;
+        const arrowLeft = 37;
+        const arrowRight = 39;
+        const letras = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        // const arrowUp = 38;
+        // const arrowDown = 40;
+
+
+        const code = keypress.keyCode;
+        const key = keypress.key;
+
+        if (nums.indexOf(code) !== -1) {
+            this.handleNumPad(key)
+        } else if (erase.indexOf(code) !== -1) {
+            this.lastOneOut();
+        } else if (code === enter) {
+            this.fetchData();
+        } else if (code === arrowLeft) {
+            this.prevPokemon();
+        } else if (code === arrowRight) {
+            this.nextPokemon();
+        } else if (letras.indexOf(key) !== -1) {
+            this.handleLetters(key);
+        }
+    }
+
 
     render() {
         const { loaded, pokemon, error, togglePhoto } = this.state;
@@ -145,17 +239,18 @@ class App extends Component {
         return (
 
             <div className="App">
-                <input type="text" onChange={evento => this.setPokemon(evento)} />
-                <button type="button" onClick={this.fetchData}>Buscar</button>
+                {/* <input type="text" onChange={evento => this.setPokemon(evento)} /> */}
+                {/* <button type="button" onClick={this.fetchData}>Buscar</button> */}
                 <div className="pokedex">
                     <img id="fotito" src="./fotito.png" alt="fotito" />
                     <img src="./pokedex.jpg" alt="test" />
-                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} />
+                    <Pad nextPokemon={this.nextPokemon} prevPokemon={this.prevPokemon} togglePhoto={this.togglePhotoSize} reset={this.reset} />
                     {
                         loaded !== 0 ? <Pokemon togglePhoto={togglePhoto} ref="pokemon" error={error} loaded={loaded} idPokemon={this.state.idPokemon} pokemon={pokemon} /> : ""
                     }
-                    <NumPad handleNumPad={this.handleNumPad} lastOneOut={this.lastOneOut} search={this.fetchData} />
-                    <p className="numero">Número: {this.state.idPokemon}</p>
+                    <NumPad handleNumPad={this.handleNumPad} lastOneOut={this.lastOneOut} search={this.fetchData} reset={this.reset}/>
+
+                    <Buscador busqueda={this.state.busqueda} idPokemon={this.state.idPokemon} />
                 </div>
             </div>
         );

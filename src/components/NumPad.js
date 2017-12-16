@@ -18,6 +18,7 @@ class NumPad extends Component {
                 <div id="numPadBotones">
                     <div id="numBuscar" onClick={this.props.search}>Buscar</div>
                     <div id="numBorrar" onClick={this.props.lastOneOut}>Borrar</div>
+                    <div id="reset" onClick={this.props.reset}></div>
                 </div>
             </div>
         )
